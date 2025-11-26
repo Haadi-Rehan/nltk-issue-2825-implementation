@@ -427,8 +427,6 @@ to use standard Python path conventions like `~/nltk_data`.
 - 100% code coverage
 - Backward compatible
 - Cross-platform support
-- Well documented
-- Ready for Assignment 4 submission
 - Production-ready code quality
 
 
