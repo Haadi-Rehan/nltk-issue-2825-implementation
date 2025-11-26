@@ -1,82 +1,55 @@
-# \# NLTK Issue #2825 – Expand `~` in Paths
+# NLTK Issue #2825 – Expand `~` in Paths
 
-# 
+This repository contains the Phase 4 implementation for ENGG*4450, adding tilde (`~`)
+expansion support to the NLTK data loading system in NLTK.
 
-# This repository contains the Phase 4 implementation for ENGG\*4450, adding tilde (`~`)
+## Feature Summary
 
-# expansion support to the NLTK data loading system.
+- Adds `expand_user_path()` to `nltk/data.py` as a safe wrapper around
+  `os.path.expanduser()`.
+- Ensures paths beginning with `~` or `~username` are expanded to the user’s home
+  directory before NLTK looks for data.
+- Applies expansion in:
+  - `nltk.data.find(...)`
+  - Initialization of the `NLTK_DATA` environment variable search paths.
+- Absolute and relative paths without `~` are left unchanged (backwards compatible).
 
-# 
+## Repository Layout
 
-# \## Feature Summary
+- `implementation/data.py` – modified `nltk.data` module containing `expand_user_path()`
+  and the integration changes.
+- `tests/test_path_expansion.py` – automated test suite (24 tests) for the new behaviour.
+- `tests/test_tilde_expansion_demo.py` – demo script illustrating typical usage.
+- `docs/Issue_2825_Implementation_Summary.md` – detailed implementation and testing summary.
 
-# 
+## Setup and Installation
 
-# \- Adds `expand\_user\_path()` to `nltk/data.py` as a safe wrapper around
+git clone https://github.com/Haadi-Rehan/nltk-issue-2825-implementation
+cd nltk-issue-2825-implementation
 
-# &nbsp; `os.path.expanduser()`.
+# Install required packages (including NLTK itself)
+python -m pip install --upgrade pip
+python -m pip install nltk pytest pytest-cov pytest-mock regex click### Apply the patched `data.py` to NLTK
 
-# \- Ensures paths containing `~` or `~username` are expanded before NLTK looks for data.
+The tests import `nltk.data`, so the installed NLTK must use the patched `data.py`:
 
-# \- Applies expansion in:
+# Find where NLTK is installed
+python -c "import nltk, os; print(os.path.dirname(nltk.__file__))"Copy `implementation/data.py` over the `data.py` in that directory, for example:
 
-# &nbsp; - `nltk.data.find(...)`
+# PowerShell / CMD example (adjust the path to match the output above)
+copy implementation\data.py "C:\Users\YOUR_USER\AppData\Local\Programs\Python\Python311\Lib\site-packages\nltk\data.py"(or the equivalent `cp` command if using Git Bash).
 
-# &nbsp; - Initialization of the `NLTK\_DATA` environment variable search paths.
+## Running the Tests
 
-# \- Keeps absolute and relative paths without `~` unchanged and fully backward compatible.
+From the **repository root**:
 
-# 
+python -m pytest tests/test_path_expansion.py -v
+python -m pytest tests/test_path_expansion.py --cov=nltk.data --cov-report=htmlThe coverage report will be written to `htmlcov/index.html`.
 
-# \## Repository Layout
+## Running the Demo
 
-# 
+From the repository root:
 
-# \- `nltk-project/nltk/data.py` – modified source file with `expand\_user\_path()` and integrations.
+python tests/test_tilde_expansion_demo.pyThe script prints several scenarios and should end with:
 
-# \- `nltk-project/nltk/test/test\_path\_expansion.py` – automated tests (24 tests) for the feature.
-
-# \- `nltk-project/test\_tilde\_expansion\_demo.py` – demo script illustrating typical usage.
-
-# \- `docs/Issue\_2825\_Implementation\_Summary.md` – detailed implementation and testing summary.
-
-# 
-
-# \## Setup and Installation
-
-# 
-
-# git clone https://github.com/Haadi-Rehan/nltk-issue-2825-implementation
-
-# cd nltk-issue-2825-implementation
-
-# 
-
-# pip install pytest pytest-cov pytest-mock regex click## Running the Tests
-
-# 
-
-# From the project root:
-
-# 
-
-# cd nltk-project
-
-# python -m pytest nltk/test/test\_path\_expansion.py -v
-
-# python -m pytest nltk/test/test\_path\_expansion.py --cov=nltk.data --cov-report=htmlThe coverage report will be written to `htmlcov/index.html`.
-
-# 
-
-# \## Running the Demo
-
-# 
-
-# cd nltk-project
-
-# python test\_tilde\_expansion\_demo.pyThe script prints several scenarios and should end with:
-
-# 
-
-# `\[SUCCESS] ALL TESTS PASSED!`
-
+[SUCCESS] ALL TESTS PASSED!
