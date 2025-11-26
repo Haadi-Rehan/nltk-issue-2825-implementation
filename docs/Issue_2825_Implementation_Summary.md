@@ -299,7 +299,7 @@ os.environ['NLTK_DATA'] = '~/custom_data'
 
 ---
 
-## 📝 User Guide (For Documentation)
+## User Guide (For Documentation)
 
 ### Using Tilde in NLTK Paths
 
@@ -331,9 +331,7 @@ home_path = expand_user_path('~/documents/data')
 
 ---
 
-## 🎓 Assignment 4 Deliverables
-
-### What to Submit
+## Assignment 4 Deliverables
 
 1. **Modified Source Code**
    - `nltk-project/nltk/data.py` (with new `expand_user_path()` function)
@@ -433,12 +431,4 @@ to use standard Python path conventions like `~/nltk_data`.
 - Ready for Assignment 4 submission
 - Production-ready code quality
 
-**Assignment 4 Requirements:** **FULLY SATISFIED**
-
----
-
-*Implementation completed by: Haadi*  
-*Date: November 24, 2025*  
-*Course: ENGG4450 - Software Reverse Engineering*  
-*Assignment: Phase 4 - Build and Test a New Feature*
 
